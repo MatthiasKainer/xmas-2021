@@ -12,14 +12,16 @@ void dimLED(uint8_t led, uint8_t interval, uint32_t delay)
 void setup()
 {
   Serial.begin(9600); 
-  pinMode(DOORBELL, INPUT); 
+  pinMode(DOORBELL, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(DOORBELL), ringDoorbell, RISING);
+}
+
+void ringDoorbell() {
+  start();
 }
 
 void loop()
 {
-  if (digitalRead(DOORBELL) == HIGH) {
-    start();
-  }
   async_play();
   dimLED(10, 255, 254);
   dimLED(5, 255, 127);
