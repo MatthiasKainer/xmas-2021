@@ -19,7 +19,7 @@
 int tempo = 120;
 
 // change this to whichever pin you want to use
-int buzzer = 3;
+uint8_t buzzer;
 
 // notes of the moledy followed by the duration.
 // a 4 means a quarter note, 8 an eighteenth , 16 sixteenth, so on
@@ -138,18 +138,19 @@ long nextChange = 0;
 int activeNote = 0;
 long time = 0;
 
-void start()
+void start(uint8_t pin)
 {
     activeNote = 0;
     play = true;
+    buzzer = pin;
 }
 
-void async_play()
+boolean async_play()
 {
     time = millis();
     if (!play || time < nextChange)
     {
-        return;
+        return play;
     }
 
     if (silent)
@@ -179,4 +180,5 @@ void async_play()
 
     silent = !silent;
     nextChange = time + noteDuration;
+    return play;
 }

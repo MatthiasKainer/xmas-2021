@@ -95,6 +95,6 @@
 #define REST 0
 
 
-void start();
-void async_play();
+void start(uint8_t pin);
+boolean async_play();
 #endif
